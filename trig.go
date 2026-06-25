@@ -2,11 +2,11 @@ package q16
 
 // Q16.16 定数 (std math 依存なし)
 var (
-	pi         = FromFloat32(3.14159265358979)
-	pi2        = FromFloat32(6.28318530717959) // 2π
-	piHalf     = FromFloat32(1.57079632679490) // π/2
-	piQuart    = FromFloat32(0.78539816339745) // π/4
-	negPiQuart = FromFloat32(-0.78539816339745)
+	pi         = FromFloat64(3.14159265358979323846)
+	pi2        = FromFloat64(6.28318530717958647693) // 2π
+	piHalf     = FromFloat64(1.57079632679489661923) // π/2
+	piQuart    = FromFloat64(0.78539816339744830962) // π/4
+	negPiQuart = FromFloat64(-0.78539816339744830962)
 )
 
 // Sin sin(x) を計算する (ラジアン入力 Q16.16 → Q16.16 出力 [-1, 1])

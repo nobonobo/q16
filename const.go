@@ -18,6 +18,6 @@ var (
 	MinFixed Fixed = Fixed(MinInt32)
 
 	// Pi π ≈ 3.141592653589793
-	Pi     = FromFloat32(3.141592653589793)
+	Pi     = FromFloat64(3.14159265358979323846)
 	Period = Mul(FromInt(2), Pi) // 2π
 )

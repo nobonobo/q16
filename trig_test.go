@@ -13,10 +13,10 @@ func TestSin(t *testing.T) {
 		want q16.Fixed
 	}{
 		{"sin(0) = 0", q16.FromInt(0), q16.FromInt(0)},
-		{"sin(30deg) = 0.5", q16.DegToRad(30), q16.FromFloat32(0.5)},
-		{"sin(90deg) = 1", q16.DegToRad(90), q16.FromInt(1)},
-		{"sin(180deg) = 0", q16.DegToRad(180), q16.FromInt(0)},
-		{"sin(-90deg) = -1", q16.DegToRad(-90), q16.FromInt(-1)},
+		{"sin(30deg) = 0.5", q16.DegToRad(q16.FromInt(30)), q16.FromFloat32(0.5)},
+		{"sin(90deg) = 1", q16.DegToRad(q16.FromInt(90)), q16.FromInt(1)},
+		{"sin(180deg) = 0", q16.DegToRad(q16.FromInt(180)), q16.FromInt(0)},
+		{"sin(-90deg) = -1", q16.DegToRad(q16.FromInt(-90)), q16.FromInt(-1)},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -40,10 +40,10 @@ func TestCos(t *testing.T) {
 		want q16.Fixed
 	}{
 		{"cos(0) = 1", q16.FromInt(0), q16.FromInt(1)},
-		{"cos(60deg) = 0.5", q16.DegToRad(60), q16.FromFloat32(0.5)},
-		{"cos(90deg) = 0", q16.DegToRad(90), q16.FromInt(0)},
-		{"cos(180deg) = -1", q16.DegToRad(180), q16.FromInt(-1)},
-		{"cos(-180deg) = -1", q16.DegToRad(-180), q16.FromInt(-1)},
+		{"cos(60deg) = 0.5", q16.DegToRad(q16.FromInt(60)), q16.FromFloat32(0.5)},
+		{"cos(90deg) = 0", q16.DegToRad(q16.FromInt(90)), q16.FromInt(0)},
+		{"cos(180deg) = -1", q16.DegToRad(q16.FromInt(180)), q16.FromInt(-1)},
+		{"cos(-180deg) = -1", q16.DegToRad(q16.FromInt(-180)), q16.FromInt(-1)},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -67,8 +67,8 @@ func TestTan(t *testing.T) {
 		want q16.Fixed
 	}{
 		{"tan(0) = 0", q16.FromInt(0), q16.FromInt(0)},
-		{"tan(45deg) = 1", q16.DegToRad(45), q16.FromInt(1)},
-		{"tan(-45deg) = -1", q16.DegToRad(-45), q16.FromInt(-1)},
+		{"tan(45deg) = 1", q16.DegToRad(q16.FromInt(45)), q16.FromInt(1)},
+		{"tan(-45deg) = -1", q16.DegToRad(q16.FromInt(-45)), q16.FromInt(-1)},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -95,8 +95,8 @@ func TestAtan(t *testing.T) {
 		want q16.Fixed
 	}{
 		{"atan(0) = 0", q16.FromInt(0), q16.FromInt(0)},
-		{"atan(1) = 45deg", q16.FromInt(1), q16.DegToRad(45)},
-		{"atan(-1) = -45deg", q16.FromInt(-1), q16.DegToRad(-45)},
+		{"atan(1) = 45deg", q16.FromInt(1), q16.DegToRad(q16.FromInt(45))},
+		{"atan(-1) = -45deg", q16.FromInt(-1), q16.DegToRad(q16.FromInt(-45))},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

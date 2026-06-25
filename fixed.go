@@ -7,24 +7,18 @@ type Fixed int32
 
 // DegToRad degreeからradianに変換する (固定小数点数のみで高精度に計算)
 func DegToRad(deg Fixed) Fixed {
-	// π/180 ≈ 0.0174532925199433 を 2^30 スケールで表すと 18740263
-	// int64の乗算を行い、四捨五入して 30ビット右シフトする
-	prod := int64(deg) * 18740263
-	if prod >= 0 {
-		return Fixed((prod + (1 << 29)) >> 30)
-	}
-	return Fixed((prod - (1 << 29)) >> 30)
+	// deg × π / 180 を計算
+	// deg × π → Q32.32 → >> 16 で Q16.16
+	prod := int64(deg) * int64(pi)
+	result := Fixed((prod + (1 << 15)) >> 16) // deg × π in Q16.16
+	return divRound(result, FromInt(180))     // / 180
 }
 
 // RadToDeg radianからdegreeに変換する (固定小数点数のみで高精度に計算)
 func RadToDeg(rad Fixed) Fixed {
-	// 180/π ≈ 57.29577951308232 を 2^24 スケールで表すと 955505
-	// int64の乗算を行い、四捨五入して 24ビット右シフトする
-	prod := int64(rad) * 955505
-	if prod >= 0 {
-		return Fixed((prod + (1 << 23)) >> 24)
-	}
-	return Fixed((prod - (1 << 23)) >> 24)
+	// rad × 180 / π を計算
+	prod := int64(rad) * 180
+	return divRound(Fixed(prod), pi)
 }
 
 // FromInt int から Fixed を作成する
