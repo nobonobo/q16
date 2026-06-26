@@ -1,9 +1,79 @@
 package q16
 
-import "time"
+import (
+	"strconv"
+	"time"
+)
 
 // Fixed Q16.16 固定小数点数
 type Fixed int32
+
+func (v Fixed) String() string {
+	return Format(v, 2)
+}
+
+var pow10 = [...]uint32{
+	1,
+	10,
+	100,
+	1000,
+	10000,
+	100000,
+	1000000,
+	10000000,
+	100000000,
+	1000000000,
+}
+
+// Format returns a decimal representation with n digits after the decimal point.
+func Format(v Fixed, n int) string {
+	if n < 0 {
+		n = 0
+	}
+	if n >= len(pow10) {
+		n = len(pow10) - 1
+	}
+
+	x := int32(v)
+
+	neg := x < 0
+	var ux uint32
+	if neg {
+		ux = uint32(-int64(x)) // MinInt32対応
+	} else {
+		ux = uint32(x)
+	}
+
+	whole := ux >> 16
+	frac := ux & 0xffff
+
+	scale := pow10[n]
+	dec := (frac * scale) >> 16 // frac * scale / 65536
+
+	var buf [32]byte
+	b := buf[:0]
+
+	if neg {
+		b = append(b, '-')
+	}
+
+	b = strconv.AppendUint(b, uint64(whole), 10)
+
+	if n == 0 {
+		return string(b)
+	}
+
+	b = append(b, '.')
+
+	div := scale / 10
+	for div != 0 {
+		b = append(b, byte('0'+dec/div))
+		dec %= div
+		div /= 10
+	}
+
+	return string(b)
+}
 
 // DegToRad degreeからradianに変換する (固定小数点数のみで高精度に計算)
 func DegToRad(deg Fixed) Fixed {
