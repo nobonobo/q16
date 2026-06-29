@@ -1,11 +1,13 @@
 package q16
 
 const (
+	ShiftBits = 16
+
 	Zero Fixed = 0
+	One  Fixed = 1 << ShiftBits
 
 	// Scale Q16.16 のスケールファクター (2^16)
-	Scale     = 1 << 16
-	ShiftBits = 16
+	Scale = 1 << ShiftBits
 
 	// MaxInt32 / MinInt32 int32 の範囲 (std math package と名前衝突するため定義)
 	MaxInt32 = 1<<31 - 1
